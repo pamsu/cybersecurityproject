@@ -2,10 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Thank you!</title>
+        <style>
+            #wrapper{
+                display:inline-flex;
+            }
+        </style>
     </head>
     <body>
-
-        <h1>Thank you! You have been signed up to the event!</h1>
-
+    <div id="wrapper" th:each="item : ${name}">     
+        <!-- "A3 Cross site scripting (XSS)" because we do not validate the name which user submits in "form" 
+        a hacker can put the script to the input and steal the user's data. 
+        -->
+        <div th:text="${item}"></div>
+        <div style="margin-left: 5px;">Thank you! You have been signed up to the event!  </div>    
+    </div>
+        
+        <div th:each="item : ${link}">     
+        <!--"A4-Insecure Direct Object References" 
+        In real life we would store those on a server and user can see the number of ticket
+        and just change it to download someone else's ticket. 
+        One way to fix it is to create name with GUID.-->
+        <a target="_blank" th:href="${item}">Download your personal ticket to the event</a>
+        
+    </div>
     </body>
 </html>
